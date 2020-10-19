@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import ins.webeye.framework.config.WebEyeConfig;
 import ins.webeye.framework.web.controller.BaseController;
-import ins.webeye.project.eye.report.service.EyeReportService;
-import ins.webeye.project.eye.report.vo.IndexReportVo;
 import ins.webeye.project.system.config.service.IConfigService;
 import ins.webeye.project.system.menu.domain.Menu;
 import ins.webeye.project.system.menu.service.IMenuService;
@@ -33,9 +31,6 @@ public class IndexController extends BaseController
     @Autowired
     private WebEyeConfig ruoYiConfig;
 
-	@Autowired
-	private EyeReportService reportService;
-    
     // 系统首页
     @GetMapping("/index")
     public String index(ModelMap mmap)
@@ -64,9 +59,7 @@ public class IndexController extends BaseController
     @GetMapping("/system/main")
     public String main(ModelMap mmap)
 	{
-		IndexReportVo reportVo = reportService.getIndexReport();
 		mmap.put("version",ruoYiConfig.getVersion());
-		mmap.put("reportVo",reportVo);
 		return "main";
 	}
 }

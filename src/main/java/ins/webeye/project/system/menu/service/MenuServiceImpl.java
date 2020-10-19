@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import ins.webeye.project.eye.order.domain.EyeOrder;
-import ins.webeye.project.eye.order.mapper.EyeOrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

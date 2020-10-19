@@ -3,7 +3,6 @@ package ins.webeye.project.system.menu.mapper;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import ins.webeye.project.eye.order.domain.EyeOrder;
 import org.apache.ibatis.annotations.Param;
 
 import ins.webeye.project.system.menu.domain.Menu;

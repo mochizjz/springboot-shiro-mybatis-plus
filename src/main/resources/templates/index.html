@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>回溯管理系统</title>
+    <title>后台管理系统</title>
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html"/>
     <![endif]-->
@@ -29,7 +29,7 @@
             <ul class="nav" id="side-menu">
                 <a th:href="@{/index}">
                   <li class="logo">
-				    <span class="logo-lg" ><b> <i> WebEye</i></b> 回溯管理 </span> 
+				    <span class="logo-lg" ><b> <i> WebEye</i></b> 后台管理 </span>
             	  </li>
             	</a>
             	<li>
@@ -82,17 +82,7 @@
 					</ul>
                 </li>
                 
-                <li shiro:hasPermission="system:user:view" >
-                  <a href="#"><i class="fa fa-video-camera"></i><span class="nav-label"> 回溯演示</span><span class="fa arrow"></span></a>
-                 <ul class="nav nav-second-level collapse in" aria-expanded="true" style="">
- 						<li><a class="menuBlank " th:href="@{/demo/eye/productBrowse}"  >PC端网销</a></li>
- 						<li><a class="menuBlank " th:href="@{/demo/eyes/productBrowse}"  >微信端(S)</a></li>
- 						<li><a class="menuBlank " th:href="@{/demo/eye/faceId}"  >人脸核身</a></li>
-					</ul>
-                </li>
-                
-                
-                
+
                 <li th:if="${demoEnabled}" style="display: none">
                     <a href="#"><i class="fa fa-medium"></i><span class="nav-label"> 开发演示</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">

@@ -62,9 +62,9 @@ public class SwaggerConfig
         // 用ApiInfoBuilder进行定制
         return new ApiInfoBuilder()
                 // 设置标题
-				.title("WebEye回溯平台_接口文档")
+				.title("WebEye后台平台_接口文档")
                 // 描述
-				.description("回溯平台提供如下接口给周边系统调用...")
+				.description("后台平台提供如下接口给周边系统调用...")
                 // 作者信息
 				.contact(new Contact(webEyeConfig.getName(),null,null))
                 // 版本

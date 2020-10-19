@@ -207,7 +207,7 @@ public class GenUtils
      */
     public static String replaceText(String text)
     {
-		return RegExUtils.replaceAll(text,"(?:表|回溯)","");
+		return RegExUtils.replaceAll(text,"(?:表|后台)","");
     }
 
     /**
