@@ -1,0 +1,289 @@
+<html style="font-size: 100px;"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="cache-control" content="max-age=0">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT">
+    <meta http-equiv="pragma" content="no-cache">
+    <title>填写投保信息</title>
+    <link rel="stylesheet" href="http://htwxclaim.pc.ehuatai.com/weixin/resource/css/index.css">
+    <script src="http://htwxclaim.pc.ehuatai.com/weixin/resource/js/jquery.min.js"></script>
+    <script type="text/javascript" src="http://htwxclaim.pc.ehuatai.com/weixin/resource/js/lib/newZeptojs/phone.js"></script>
+    <!-- 日期控件 -->
+    <script src="http://htwxclaim.pc.ehuatai.com/weixin/resource/js/mobiscroll/mobiscroll.custom-2.5.0.min.js"></script>
+    <link rel="stylesheet" href="http://htwxclaim.pc.ehuatai.com/weixin/resource/js/mobiscroll/mobiscroll.custom-2.5.0.min.css">
+    <!-- 提示控件 -->
+    <script src="http://htwxclaim.pc.ehuatai.com/weixin/resource/js/layer_mobile/layer.js"></script><link href="http://htwxclaim.pc.ehuatai.comhttp://htwxclaim.pc.ehuatai.com/weixin/resource/js/layer_mobile/need/layer.css?2.0" type="text/css" rel="styleSheet" id="layermcss">
+    <script src="http://htwxclaim.pc.ehuatai.com/weixin/page/resourceJs/commonInfo.js"></script>
+    <script src="http://htwxclaim.pc.ehuatai.com/weixin/page/milnMedlCopraProductJs/appInsureInput.js"></script>
+</head>
+<body>
+<section class="container filling_Info bg_wh">
+    <header class="FI_top txt_c pos_rel bor_bottom bor_size_p3">
+        填写投保信息<span class="pos_abs top_arrowL" id="returnId"></span>
+    </header>
+
+    <main class="FI_main">
+        <form id="appMillionMedicalForm" action="wxMilnMedlCopraProduct_save.action" method="post">
+            <input type="hidden" name="id" id="id" value="10056385"> <!-- 为了避开点击手机返回键导致投保信息重复生成的问题，投保单主键在JS中触发生成 -->
+            <input type="hidden" name="CInsrncCde" id="CInsrncCde" value="4268">
+            <input type="hidden" name="CTermCde" id="CTermCde" value="A"> <!-- 考虑到二期意外险需求，可以通过款别编码取保费，限购份数等信息 -->
+            <input type="hidden" name="cloginCnm" id="cloginCnm" value="test">
+            <input type="hidden" id="CDownloadPol" name="CDownloadPol" value="1"> <!-- 是否下载电子保单到邮箱  下载电子保单到邮箱标识 0：未勾选 1：已勾选-->
+            <input type="hidden" id="CInvoice" name="CInvoice" value="1" disabled="disabled"> <!-- 是否下载电子发票  标识 0：未勾选 1：已勾选-->
+            <input type="hidden" id="NAgeLower" value="1"> <!-- 年龄下限 -->
+            <input type="hidden" id="NAgeUpper" value="65"> <!-- 年龄上限 -->
+            <input type="hidden" name="interactiveA" id="interactiveA" value="0"> <!-- 被保人年龄，与后台交互使用 -->
+            <input type="hidden" id="termsAgreeFlag" name="termsAgreeFlag" value="0"><!--条款是否已阅读并同意,与修改页面交互使用  -->
+            <input type="hidden" id="flag" name="CCommon2" value="1"><!--条款是否已阅读并同意,与修改页面交互使用  -->
+            <input type="hidden" name="struts.token.name" value="token">
+<input type="hidden" name="token" value="LSKNLREVKCGYWXHHAFXLXNWLT26Z08JO">
+            
+            <div class="FI_person_info">
+                <h2 class="bor_size_p3 pos_rel">
+                    <span class="pos_abs left_3"></span>
+                    <span>投保人信息</span>
+                </h2>
+                <ul class="bor_bottom bor_top bor_size_p3">
+                    <li class="bor_bottom fx">
+                        <div class="pos_rel left_3 fx_2">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</div>
+                        <div class="pos_rel right_6 fx_4 txt_r">
+                            <input class="margin_r3" type="text" name="CAppNme" id="CAppNme" placeholder="请输入姓名...">
+                            <span class="bg_redstar"></span>
+                        </div>
+                    </li>
+                    <li class="bor_bottom fx">
+                        <div class="pos_rel left_3 fx_2">证件类型</div>
+                        <div class="pos_rel right_6 fx_4 txt_r">
+                            <select class="select_icon " name="CAppType" id="C_APP_TYPE">
+                                <option value="01">
+                                    身 份 证
+                                </option>
+                                <option value="99">
+                                    其　　它
+                                </option>
+                            </select>
+                            <span class="pos_abs form_Rlabel bg_arrowR new_form_Rlabel"></span>
+                            <span class="bg_redstar"></span>
+                        </div>
+                    </li>
+                    <li class="bor_bottom fx">
+                        <div class="pos_rel left_3 fx_2">证件号码</div>
+                        <div class="pos_rel right_6 fx_4 txt_r">
+                            <input class="margin_r3" type="text" name="CAppNo" id="CAppNo" placeholder="请输入证件号码...">
+                            <span class="bg_redstar"></span>
+                        </div>
+                    </li>
+                    <li class="bor_bottom fx">
+                        <div class="pos_rel left_3 fx_2">手机号码</div>
+                        <div class="pos_rel right_6 fx_4 txt_r">
+                            <input class="margin_r3" type="text" name="TAppTel" id="TAppTel" placeholder="请输入手机号码...">
+                            <span class="bg_redstar"></span>
+                        </div>
+                    </li>
+                    <li class="bor_bottom fx">
+                        <div class="pos_rel left_3 fx_2">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱</div>
+                        <div class="pos_rel right_6 fx_4 txt_r">
+                            <input class="margin_r3" type="text" name="CAppEmail" id="CAppEmail" placeholder="请输入邮箱...">
+                            <span class="bg_redstar"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="middle_space"></div>
+            <div class="FI_person_info">
+                <h2 class="bor_size_p3 pos_rel">
+                    <span class="pos_abs"></span>
+                    <span>被保人信息</span>
+                </h2>
+                <ul class="bor_bottom bor_top bor_size_p3">
+                    <li class="bor_bottom fx">
+                        <div class="pos_rel left_3 fx_2">关&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;系</div>
+                            <div class="pos_rel right_6 fx_4 txt_r">
+                            <select class="select_icon" name="CRelation" id="CRelation">
+                                <option value="">
+                                    -请选择-
+                                </option>
+                                <option value="00">
+                                    本　　人
+                                </option>
+                                <option value="01">
+                                    配　　偶
+                                </option>
+                                <option value="03">
+                                    子　　女
+                                </option>
+                                <option value="02">
+                                    父　　母
+                                </option>
+                            </select>
+                            <span class="pos_abs form_Rlabel bg_arrowR new_form_Rlabel"></span>
+                            <span class="bg_redstar"></span>
+                        </div>
+                    </li>
+                    <li class="bor_bottom fx">
+                        <div class="pos_rel left_3 fx_2">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</div>
+                        <div class="pos_rel right_6 fx_4 txt_r">
+                            <input class="margin_r3" type="text" name="CInsrntNme" id="CInsrntNme" placeholder="请输入姓名...">
+                            <span class="bg_redstar"></span>
+                        </div>
+                    </li>
+                    <li class="bor_bottom fx">
+                            <div class="pos_rel left_3 fx_2">证件类型</div>
+                            <div class="pos_rel right_6 fx_4 txt_r">
+                            <select class="select_icon" name="CInsrntType" id="CInsrntType">
+                                <option value="01">
+                                    身 份 证
+                                </option>
+                                <option value="99">
+                                    其　　它
+                                </option>
+                            </select>
+                            <span class="pos_abs form_Rlabel bg_arrowR new_form_Rlabel"></span>
+                            <span class="bg_redstar"></span>
+                        </div>
+                    </li>
+                    <li class="bor_bottom fx">
+                            <div class="pos_rel left_3 fx_2">证件号码</div>
+                            <div class="pos_rel right_6 fx_4 txt_r">
+                            <input class="margin_r3" type="text" name="CInsrntNo" id="CInsrntNo" placeholder="请输入证件号码...">
+                            <span class="bg_redstar"></span>
+                        </div>
+                    </li>
+                    <li class="bor_bottom fx">
+                        <div class="pos_rel left_3 fx_2">出生日期</div>
+                        <div class="pos_rel right_6 fx_4 txt_r">
+                            <input class="margin_r3 " type="text" placeholder="必　选" name="TInsrntBthd" id="TInsrntBthd" readonly="">
+                            <span class="bg_redstar"></span>
+                        </div>
+                    </li>
+                    <li class="bor_bottom fx">
+                        <div class="pos_rel left_3 fx_2">有无社保</div>
+                        <div class="pos_rel right_6 fx_4 txt_r ">
+                            <select class="select_icon" name="CCommon1" id="CCommon1">
+                                <option value="">-请选择-</option>
+                                <option value="02">
+                                    无 社 保
+                                </option>
+                                <option value="01">
+                                    有 社 保
+                                </option>
+                            </select>
+                            <span class="pos_abs form_Rlabel bg_arrowR new_form_Rlabel"></span>
+                            <span class="bg_redstar"></span>
+                        </div>
+                    </li>
+                    <li class="bor_bottom fx">
+                            <div class="pos_rel left_3 fx_2">手机号码</div>
+                            <div class="pos_rel right_6 fx_4 txt_r">
+                            <input class="margin_r3" type="text" name="CInsrntTel" id="CInsrntTel" placeholder="请输入手机号码...">
+                            <span class="bg_redstar"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="middle_space"></div>
+            <div class="FI_person_info bor_top2">
+                <h2 class="bor_size_p3 pos_rel">
+                    <span class="pos_abs"></span>
+                    <span>投保产品信息</span>
+                </h2>
+                <ul class="bor_bottom bor_top">
+                    <li class="pos_rel bor_bottom bor_size_p3 fx">
+                        <div class="pos_rel left_3 fx_2">保险起期</div>
+                        <div class="pos_rel right_6 fx_4 txt_r">
+                           <input class="margin_r3" type="text" name="TAppBgnTm" id="TAppBgnTm" readonly="">
+                        </div>
+                    </li>
+                    <div class="bor_bottom explan">
+                        保险起期默认为投保日期次日
+                    </div>
+                    <li class="bor_bottom bor_size_p3 fx">
+                        <div class="pos_rel left_3 fx_2">保险期间</div>
+                        <div class="pos_rel right_6 fx_4 txt_r margin_r3">
+                            
+                                1年
+                            
+                            
+                        </div>
+                    </li>
+                </ul>
+                <div class="pos_rel bor_bottom bor_size_p3 bg_wh load_form" id="emailFlag">
+                    <span class="pos_abs left_6 check_dot check_load" id="emailFlagSpan"></span>
+                        下载电子保单到邮箱
+                </div>
+                <!-- <div class="pos_rel bor_bottom bor_size_p3 bg_wh load_form" id="invoiceFlag">
+                    <span class="pos_abs left_6 check_dot check_load" id="invoiceFlagSpan"></span>
+                        是否开具电子发票
+                </div> -->
+                <div class="pos_rel bor_bottom bor_size_p3 bg_wh terms_area" id="termsArea">
+                 请详细阅读本保险产品
+                    
+                        <div  class="orange" name="noticeOfInsn"  >（健康告知）《投保须知》</div>
+                        、适用条款
+                        <div  class="orange" name="personHighMedicalExpense">(条款阅读)《华泰财险个人中高端医疗费用保险条款-(华泰财险)(备-医疗保险)【2017】(主)_008号》</div>
+                               、<a href="javascript:void(0)" class="orange" data-name="additiInjuryHospitAllowanceV">《华泰（备案）[2009]N20号-附加意外伤害住院津贴保险条款》</a>
+                              、 <a href="javascript:void(0)" class="orange" data-name="occupationClassV">《华泰保险职业分类表》</a>
+                    
+                    
+                        、 <a href="javascript:void(0)" class="orange" data-name="terms1V">《绿通医院清单》</a>
+                              、 <a href="javascript:void(0)" class="orange" data-name="terms2V">《重大疾病清单》</a>
+                              、<a href="javascript:void(0)" class="orange" data-name="terms3V">《住院垫付城市清单》</a>
+                              及 <a href="javascript:void(0)" class="orange" data-name="terms4V">《百万医疗服务包被保险人授权同意书》</a> 
+                        ，请分别点击进入阅读。
+                </div>
+                <div class="pos_rel bor_bottom bor_size_p3 bg_wh load_form" id="agreeTermSpanFlag">
+                    <span class="pos_abs left_6 check_dot" id="agreeTermSpan"></span>
+                        本人已阅读并同意
+                </div>
+            </div>
+        </form>
+        <div class="button_sub txt_c" id="appInsureConfirmBtn">确定投保</div>
+    </main>
+
+    <footer>
+
+    </footer>
+
+
+</section>
+
+</body>
+<script th:inline="javascript"> var ctx = [[@{/}]]; </script>
+<script th:src="@{/webeye/sdk/webrecord.js?sysCode=QSCWX}"></script>
+<script type="text/javascript">
+
+$(function () {
+    WebEye.record({
+        productCode:"jk_zhonghui-gift-weekillness_zhonghui-gift-weekillness-land-page-2",
+        productName:"jk_zhonghui-gift-weekillness_zhonghui-gift-weekillness-land-page-2",
+        nodeCode:"InsureInput",
+        pageId: "InsureInput_6103_vue",
+        userId: "testuser",
+    }).start();
+})
+
+
+$('div[name="noticeOfInsn"]').click(function () {
+	 WebEye.start("InsureConfirm");
+});
+
+$('div[name="personHighMedicalExpense"]').click(function () {
+	 WebEye.start("ClauseBrowse");
+});
+$('#appInsureConfirmBtn').click(function () {
+	 
+	var orderId = Math.ceil(Math.random()*10000000000); 
+	WebEye.end("InsureInput",{orderId:orderId}).then(function(){
+		 setTimeout(function(){
+		 window.location.href = ctx + 'demo/eyes/paymentEnd?orderId='+orderId;
+		 },2000)
+	});
+	
+	   
+});
+
+</script>
+</html>

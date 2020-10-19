@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ins.webeye.project.eye.faceapilog.mapper.EyeFaceapiLogMapper">
+    
+    <resultMap type="EyeFaceapiLog" id="EyeFaceapiLogResult">
+        <result property="id"    column="id"    />
+        <result property="clientCode"    column="client_code"    />
+        <result property="clientName"    column="client_name"    />
+        <result property="faceType"    column="face_type"    />
+        <result property="userName"    column="user_name"    />
+        <result property="userIdcard"    column="user_idcard"    />
+        <result property="recognitionData"    column="recognition_data"    />
+        <result property="recognitionDate"    column="recognition_date"    />
+        <result property="facePicture"    column="face_picture"    />
+        <result property="status"    column="status"    />
+        <result property="createUser"    column="create_user"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateUser"    column="update_user"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="flag"    column="flag"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectEyeFaceapiLogVo">
+        select id, client_code, client_name, face_type, user_name, user_idcard, recognition_data, recognition_date, face_picture, status, create_user, create_time, update_user, update_time, flag, remark from eye_faceapi_log
+    </sql>
+
+    <select id="selectEyeFaceapiLogList" parameterType="EyeFaceapiLog" resultMap="EyeFaceapiLogResult">
+        <include refid="selectEyeFaceapiLogVo"/>
+        <where>  
+            <if test="clientCode != null  and clientCode != ''"> and client_code = #{clientCode}</if>
+            <if test="clientName != null  and clientName != ''"> and client_name like concat('%', #{clientName}, '%')</if>
+            <if test="faceType != null  and faceType != ''"> and face_type = #{faceType}</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="userIdcard != null  and userIdcard != ''"> and user_idcard = #{userIdcard}</if>
+            <if test="recognitionData != null  and recognitionData != ''"> and recognition_data = #{recognitionData}</if>
+            <!-- <if test="recognitionDate != null "> and recognition_date = #{recognitionDate}</if> -->
+            
+             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+				and date_format(recognition_date,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+			</if>
+			<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+				and date_format(recognition_date,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+			</if>
+            
+            <if test="facePicture != null  and facePicture != ''"> and face_picture = #{facePicture}</if>
+        </where>
+    </select>
+    
+    <select id="selectEyeFaceapiLogById" parameterType="Long" resultMap="EyeFaceapiLogResult">
+        <include refid="selectEyeFaceapiLogVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertEyeFaceapiLog" parameterType="EyeFaceapiLog" useGeneratedKeys="true" keyProperty="id">
+        insert into eye_faceapi_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="clientCode != null">client_code,</if>
+            <if test="clientName != null">client_name,</if>
+            <if test="faceType != null">face_type,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="userIdcard != null">user_idcard,</if>
+            <if test="recognitionData != null">recognition_data,</if>
+            <if test="recognitionDate != null">recognition_date,</if>
+            <if test="facePicture != null">face_picture,</if>
+            <if test="status != null">status,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateUser != null">update_user,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="flag != null">flag,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="clientCode != null">#{clientCode},</if>
+            <if test="clientName != null">#{clientName},</if>
+            <if test="faceType != null">#{faceType},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="userIdcard != null">#{userIdcard},</if>
+            <if test="recognitionData != null">#{recognitionData},</if>
+            <if test="recognitionDate != null">#{recognitionDate},</if>
+            <if test="facePicture != null">#{facePicture},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createUser != null">#{createUser},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateUser != null">#{updateUser},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="flag != null">#{flag},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEyeFaceapiLog" parameterType="EyeFaceapiLog">
+        update eye_faceapi_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="clientCode != null">client_code = #{clientCode},</if>
+            <if test="clientName != null">client_name = #{clientName},</if>
+            <if test="faceType != null">face_type = #{faceType},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="userIdcard != null">user_idcard = #{userIdcard},</if>
+            <if test="recognitionData != null">recognition_data = #{recognitionData},</if>
+            <if test="recognitionDate != null">recognition_date = #{recognitionDate},</if>
+            <if test="facePicture != null">face_picture = #{facePicture},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateUser != null">update_user = #{updateUser},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="flag != null">flag = #{flag},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEyeFaceapiLogById" parameterType="Long">
+        delete from eye_faceapi_log where id = #{id}
+    </delete>
+
+    <delete id="deleteEyeFaceapiLogByIds" parameterType="String">
+        delete from eye_faceapi_log where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

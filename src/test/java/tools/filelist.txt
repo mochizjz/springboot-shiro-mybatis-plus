@@ -1,0 +1,26 @@
+Revision: 16570
+Author: liup
+Date: 2020年9月1日 15:57:42
+Message:
+调整产品显示
+----
+Modified : /IMG/src/WebEye/WebEye-admin/src/main/resources/templates/eye/player/webPlayer.html
+
+Revision: 16569
+Author: liup
+Date: 2020年9月1日 15:49:54
+Message:
+人工质检轨迹调整
+----
+Modified : /IMG/src/WebEye/WebEye-admin/src/main/resources/mybatis/eye/EyeCheckLogMapper.xml
+Modified : /IMG/src/WebEye/WebEye-admin/src/main/resources/templates/eye/checklog/checklog.html
+
+Revision: 16567
+Author: liup
+Date: 2020年9月1日 15:40:55
+Message:
+可以控制是否要产生新的token
+----
+Modified : /IMG/src/WebEye/WebEye-admin/src/main/java/ins/webeye/project/eye/app/controller/EyeAppController.java
+Modified : /IMG/src/WebEye/WebEye-admin/src/main/java/ins/webeye/project/eye/record/domain/EyeRecordPage.java
+

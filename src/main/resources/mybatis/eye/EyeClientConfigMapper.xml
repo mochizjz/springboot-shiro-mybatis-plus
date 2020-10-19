@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ins.webeye.project.eye.clientconfig.mapper.EyeClientConfigMapper">
+    
+    <resultMap type="EyeClientConfig" id="EyeClientConfigResult">
+        <result property="id"    column="id"    />
+        <result property="clientCode"    column="client_code"    />
+        <result property="clientName"    column="client_name"    />
+        <result property="clientType"    column="client_type"    />
+        <result property="clientUrl"    column="client_url"    />
+        <result property="sdkType"    column="sdk_type"    />
+        <result property="autoStart"    column="auto_start"    />
+        <result property="contactName"    column="contact_name"    />
+        <result property="contactMail"    column="contact_mail"    />
+        <result property="authorizeId"    column="authorize_id"    />
+        <result property="authorizeKey"    column="authorize_key"    />
+        <result property="status"    column="status"    />
+        <result property="httpsOnly"    column="https_only"    />
+        <result property="createUser"    column="create_user"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateUser"    column="update_user"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="flag"    column="flag"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectEyeClientConfigVo">
+        select id, client_code, client_name, client_type, client_url, sdk_type, auto_start, contact_name, contact_mail, authorize_id, authorize_key, status, https_only, create_user, create_time, update_user, update_time, flag, remark from eye_client_config
+    </sql>
+
+    <select id="selectEyeClientConfigList" parameterType="EyeClientConfig" resultMap="EyeClientConfigResult">
+        <include refid="selectEyeClientConfigVo"/>
+        <where>  
+            <if test="clientCode != null  and clientCode != ''"> and client_code = #{clientCode}</if>
+            <if test="authorizeId != null  and authorizeId != ''"> and authorize_id = #{authorizeId}</if>
+            <if test="clientName != null  and clientName != ''"> and client_name like concat('%', #{clientName}, '%')</if>
+            <if test="clientType != null  and clientType != ''"> and client_type = #{clientType}</if>
+            <if test="sdkType != null  and sdkType != ''"> and sdk_type = #{sdkType}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+				and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+			</if>
+			<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+				and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+			</if> 
+        </where>
+         order by create_time desc
+    </select>
+    
+    <select id="selectEyeClientConfigById" parameterType="Long" resultMap="EyeClientConfigResult">
+        <include refid="selectEyeClientConfigVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertEyeClientConfig" parameterType="EyeClientConfig" useGeneratedKeys="true" keyProperty="id">
+        insert into eye_client_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="clientCode != null and clientCode != ''">client_code,</if>
+            <if test="clientName != null and clientName != ''">client_name,</if>
+            <if test="clientType != null and clientType != ''">client_type,</if>
+            <if test="clientUrl != null">client_url,</if>
+            <if test="sdkType != null and sdkType != ''">sdk_type,</if>
+            <if test="autoStart != null">auto_start,</if>
+            <if test="contactName != null">contact_name,</if>
+            <if test="contactMail != null">contact_mail,</if>
+            <if test="authorizeId != null">authorize_id,</if>
+            <if test="authorizeKey != null">authorize_key,</if>
+            <if test="status != null">status,</if>
+            <if test="httpsOnly != null">https_only,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateUser != null">update_user,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="flag != null">flag,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="clientCode != null and clientCode != ''">#{clientCode},</if>
+            <if test="clientName != null and clientName != ''">#{clientName},</if>
+            <if test="clientType != null and clientType != ''">#{clientType},</if>
+            <if test="clientUrl != null">#{clientUrl},</if>
+            <if test="sdkType != null and sdkType != ''">#{sdkType},</if>
+            <if test="autoStart != null">#{autoStart},</if>
+            <if test="contactName != null">#{contactName},</if>
+            <if test="contactMail != null">#{contactMail},</if>
+            <if test="authorizeId != null">#{authorizeId},</if>
+            <if test="authorizeKey != null">#{authorizeKey},</if>
+            <if test="status != null">#{status},</if>
+            <if test="httpsOnly != null">#{httpsOnly},</if>
+            <if test="createUser != null">#{createUser},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateUser != null">#{updateUser},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="flag != null">#{flag},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEyeClientConfig" parameterType="EyeClientConfig">
+        update eye_client_config
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="clientCode != null and clientCode != ''">client_code = #{clientCode},</if>
+            <if test="clientName != null and clientName != ''">client_name = #{clientName},</if>
+            <if test="clientType != null and clientType != ''">client_type = #{clientType},</if>
+            <if test="clientUrl != null">client_url = #{clientUrl},</if>
+            <if test="sdkType != null and sdkType != ''">sdk_type = #{sdkType},</if>
+            <if test="autoStart != null">auto_start = #{autoStart},</if>
+            <if test="contactName != null">contact_name = #{contactName},</if>
+            <if test="contactMail != null">contact_mail = #{contactMail},</if>
+            <if test="authorizeId != null">authorize_id = #{authorizeId},</if>
+            <if test="authorizeKey != null">authorize_key = #{authorizeKey},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="httpsOnly != null">https_only = #{httpsOnly},</if>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateUser != null">update_user = #{updateUser},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="flag != null">flag = #{flag},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEyeClientConfigById" parameterType="Long">
+        delete from eye_client_config where id = #{id}
+    </delete>
+
+    <delete id="deleteEyeClientConfigByIds" parameterType="String">
+        delete from eye_client_config where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:include="include :: header('视频回放')" />
+    <th:block th:include="include :: datetimepicker-css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时间轴</title>
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+    <link href="../static/css/main/animate.min.css" th:href="@{/css/main/animate.min.css}" rel="stylesheet" />
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+    <link href="../static/css/viewer.css" th:href="@{/css/viewer.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../js/plugins/rrweb/rrweb.min.css" type="text/css">
+    <link rel="stylesheet" href="../../../js/plugins/rrweb/rrwebStyle.css" type="text/css">
+    <style>
+        .switch {
+            display: none !important;
+        }
+    </style>
+
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/viewer.js"></script>
+    <script src="../../../js/plugins/rrweb/rrweb.min.js"></script>
+    <!-- <script src="../../../js/plugins/rrweb/bundle.js"></script> -->
+    <script src="../../../js/plugins/rrweb/rrwebIndex.js"></script>
+    <script th:inline="javascript">
+        var token = [[${ eyeOrderPageList[0].token }]];
+        var nodeCodeDatas = [[${@dict.getType('eye_node_config')}]];
+        console.log(token);
+
+        $(document).ready(function () {
+        	if(document.getElementById('imgBox')){
+            	var galley = document.getElementById('imgBox');
+            	var viewer = new Viewer(galley, {
+                    url: 'data-original',
+                  });
+        		}
+        	
+        	$('.uploadImg').hover(function(){
+        		$(this).siblings('.vertical-timeline-bottomTitle').toggleClass('disn')
+        	})
+        	
+            
+         	$('.nodeCode').each(function(index){
+        		var code = $.table.selectDictLabel(nodeCodeDatas, $(this).text())
+        		$(this).html(code);
+        		if(index == $('.nodeCode').length) {
+        			return false;
+        		}
+        	});
+
+        	if($('.vertical-timeline-bottomTitle')){
+        		var width = $('.vertical-timeline-bottomTitle').siblings('.uploadImg').css("width")
+        		$('.vertical-timeline-bottomTitle').css("width",width)
+        	}
+        	
+            $('#lightVersion').click(function (event) {
+                event.preventDefault()
+                $('#ibox-content').removeClass('ibox-content');
+                $('#vertical-timeline').removeClass('dark-timeline');
+                $('#vertical-timeline').addClass('light-timeline');
+            });
+            $('#darkVersion').click(function (event) {
+                event.preventDefault()
+                $('#ibox-content').addClass('ibox-content');
+                $('#vertical-timeline').removeClass('light-timeline');
+                $('#vertical-timeline').addClass('dark-timeline');
+            });
+
+            $('.replay').click(function (event) {
+                var width = $('#snap').width() * 0.98;
+                var height = $('#snap').height() * 0.85;
+                /*  webEye.capture({});
+                webEye.replayer({type:"ckxz",ordernum:"2345",dom:"#snap"});
+                
+             
+               event.preventDefault(); */
+                $('#snap').html("");
+                var type = "";
+                var events = [];
+                var elemFlag = $(this).attr('elemFlag')
+                if (elemFlag === "HealthConfirm") {
+                    type = "ckxz";
+                } else if (elemFlag === "messageImport") {
+                    type = "xxlr";
+                } else if (elemFlag === "viewProduct") {
+                    type = "cpll";
+                } else if (elemFlag === "comfirmBuss") {
+                    type = "tbqr";
+                }
+                $.ajax({
+                    url: "/eye/recordPlay/getFile?path=" + elemFlag, type: "get", async: false,
+                    success: function (res) {
+                        /* console.log(res)
+                        events= JSON.parse(res); */
+                        var data = res.substr(0, res.length - 1)
+                        events = '[' + data + ']';
+                        events = JSON.parse(events);
+                        console.log(events);
+                        if(events.length==0) {
+                        	$.modal.alertError("没有相关数据，请重试！");
+                        	return;
+                        }
+                        new rrwebPlayer({
+                            target: document.getElementById('snap'), // customizable root element
+                            data: {
+                                events,
+                                autoPlay: true,
+                                width: width,
+                                height:height
+                            },
+                        });
+                    }
+                });
+            })
+
+        });
+
+
+
+        /*  if (!window.localStorage) {
+          alert("浏览器不支持localStorage");
+          return false;
+      } else {
+          var storage = window.localStorage;
+          var json = "";
+          var events = [];
+          var elemFlag = $(this).attr('elemFlag')
+          if( elemFlag === "HealthConfirm") {
+             json = storage.getItem("Checkevents");
+            events = JSON.parse(json).Checkevents;
+          } else if(elemFlag === "messageImport") {
+              json = storage.getItem("Importevents");
+                 events = JSON.parse(json).Importevents;
+          }else if(elemFlag === "viewProduct") {
+              json = storage.getItem("viewProevents");
+               events = JSON.parse(json).viewProevents;
+       }
+      console.log(events); */
+        /*   new rrwebPlayer({
+                               target: document.getElementById('snap'), // customizable root element
+                               data: {
+                                   events,
+                                   autoPlay: true,
+                               },
+                           }); */
+        /*   }
+         }); */
+        //     })
+        // });
+
+
+
+
+
+        // (function () {
+        //     if (!window.localStorage) {
+        //         alert("浏览器不支持localStorage");
+        //         return false;
+        //     } else {
+        //         var storage = window.localStorage;
+        //         var json = storage.getItem("viewProevents");
+        //         var events = JSON.parse(json).viewProevents;
+        //         console.log(events);
+        //         new rrwebPlayer({
+        //             target: document.getElementById('snap'), // customizable root element
+        //             data: {
+        //                 events,
+        //                 autoPlay: true,
+        //             },
+        //         });
+        //     }
+        // })()
+
+
+    </script>
+
+</head>
+
+<body class="gray-bg">
+    <div class="row animated fadeInRight" style="margin-top:6vh">
+        <div class="ibox float-e-margins">
+            <!--  <div class="text-center float-e-margins p-md">
+                <span>打开/关闭颜色/背景或方向版本: </span>
+                <a href="#" class="btn btn-xs btn-primary" id="lightVersion">轻型版本 </a>
+                <a href="#" class="btn btn-xs btn-primary" id="darkVersion">黑色版本 </a>
+            </div> -->
+            <div id="ibox-content" style="display:flex;background-color: #eee;height:92vh;">
+
+                <div id="vertical-timeline" class="vertical-container light-timeline" style="overflow: auto;">
+                   
+                        <div class="vertical-timeline-block" th:each="eyeOrder:${eyeOrderPageList}" th:if="${eyeOrder.operType !='2'}" style="margin-right:5px">
+                            <div class="vertical-timeline-icon blue-bg" >
+                                <i class="fa fa-tv"></i>
+                            </div>
+                            
+                            <div class="vertical-timeline-content">
+                            	<div class="vertical-timeline-title">
+                            		<h2 class="nodeCode" th:text="${eyeOrder.nodeCode}"></h2>
+                            		<span>
+                            			<span style="font-size:13px" th:text="${#calendars.format(eyeOrder.beginTime, 'yyyy-MM-dd hh:mm:ss')}"></span>
+                            			到
+                            			<span style="font-size:13px" th:text="${#calendars.format(eyeOrder.endTime, 'hh:mm:ss')}"></span>
+                            		</span>
+                                	
+                            	</div>
+                                <p th:text="${'产品名称：'+eyeOrder.productName }"></p>
+                                <p></p>
+                                <a href="#" class="btn btn-sm btn-primary replay" th:if="${not #strings.isEmpty(eyeOrder.filePath)}"
+                                    th:elemFlag="${ eyeOrder.filePath }"><i class="fa fa-play"></i> 回放</a>
+                                <span class="vertical-date">
+                                    <span th:text="${'操作时长：'+(eyeOrder.recordTime/60==0?'':eyeOrder.recordTime/60+'分')+eyeOrder.recordTime%60 +'秒' }" style="color:#ddd"></span>
+                         		</span>
+                        	</div>
+                         
+                    
+                         
+                         
+                        
+
+                      
+                     </div>
+                     </div>
+
+                 <!--     <div class="vertical-timeline-block">
+                         <div class="vertical-timeline-icon yellow-bg">
+                             <i class="fa fa-file-pdf-o"></i>
+                         </div>
+
+                         <div class="vertical-timeline-content" >
+                             <h2>条款浏览</h2>
+                              <p>（未操作）</p>
+                              <span class="vertical-date">  <br><small> </small></span>
+                             <p>条款名称：财险个人医疗保险（2018版）条款</p>
+                             <a href="#" class="btn btn-sm btn-primary replay" elemFlag="viewItem"><i class="fa fa-play"></i> 回放</a>
+                             <span class="vertical-date">
+                         	操作时间：25秒   （PC端）<br>
+                         <small>2020/07/05 15:33</small>
+                     
+                         </div>
+                     </div>
+                     
+                     
+                      <div class="vertical-timeline-block">
+                         <div class="vertical-timeline-icon blue-bg">
+                             <i class="fa fa-file-text"></i>
+                         </div>
+
+                         <div class="vertical-timeline-content" >
+                             <h2>查看须知</h2>
+                             <div th:each="rec1:${eyeOrderPageList}"> 
+                                 <div  th:if="${rec1.type == 'ckxz' }">
+                                    <p></p>
+                                    <a href="#" class="btn btn-sm btn-primary replay" elemFlag="HealthConfirm"><i class="fa fa-play"></i> 回放</a>
+                                    <span class="vertical-date">
+                                    操作时间：25秒   （PC端）<br>                        
+                                    <small  th:text="${#dates.format(rec1.recordingtime, 'yyyy-MM-dd hh:mm:ss')}"></small>
+                                    </span>
+                                 </div>                                                        
+                         	</div>                        	                                             
+                         </div>
+                     </div>
+                     
+
+                     <div class="vertical-timeline-block">
+                         <div class="vertical-timeline-icon yellow-bg">
+                             <i class="fa fa-edit"></i>
+                         </div>
+
+                         <div class="vertical-timeline-content">
+                             <h2>信息录入</h2>
+                             <div th:each="rec:${eyeOrderPageList}"> 
+                            <div th:if="${rec.type == 'xxlr' }" >
+                                <input type="hidden" class="ordernum" th:value="${ rec.ordernum }" >
+                            <p th:text="${'订单号：' + rec.ordernum }"></p>
+                           <a href="#" class="btn btn-sm btn-primary replay"  elemFlag="messageImport"><i class="fa fa-play"></i> 回放</a>
+                             <span class="vertical-date"> 操作时间：3分11秒   （PC端）<br>
+                         <small  th:text="${#dates.format(rec.recordingtime, 'yyyy-MM-dd hh:mm:ss')}"></small>
+                         </span>
+                            </div>
+                             
+                         </div>
+                         </div>
+                     </div>
+
+                     <div class="vertical-timeline-block">
+                         <div class="vertical-timeline-icon red-bg">
+                             <i class="fa fa-check-circle"></i>
+                         </div>
+
+                         <div class="vertical-timeline-content" >
+                             <h2>投保确认</h2>
+                             <p>（未操作）</p>
+                             <span class="vertical-date">  <br><small> </small></span>
+                             <p>投保单号：T2020441000045612</p>
+                               <a href="#" class="btn btn-sm btn-primary replay"  elemFlag="comfirmBuss"><i class="fa fa-play"></i> 回放</a>
+                             <span class="vertical-date"> 操作时间：16秒   （PC端）<br>
+                         <small>2020/07/05 15:41</small></span>
+                         </div>
+                     </div>
+
+                     <div class="vertical-timeline-block">
+                         <div class="vertical-timeline-icon lazur-bg" elemFlag="playOnline">
+                             <i class="fa fa-cny"></i>
+                         </div>
+
+                         <div class="vertical-timeline-content">
+                             <h2>在线支付</h2>
+                             <p>（未操作）</p>
+                             <span class="vertical-date">  <br><small> </small></span>
+                         </div>
+                     </div> -->
+              
+                 <div id="snap" >   
+</div>
+</div>
+            </div>
+            <div style="height:30vh;">
+            	<div class="vertical-timeline-block" >
+                        	<div class="" >
+                                <div id="imgBox" style="padding-left:70px;">
+                                	<div th:each="eyeOrder:${eyeOrderPageList}" th:if="${eyeOrder.operType=='2'}">
+                                		<img th:if="${eyeOrder.operType=='2'}"  th:src="${'/eye/recordPlay/getImage?path='+eyeOrder.filePath}" alt="" class="uploadImg"
+										th:data-original="${'/eye/recordPlay/getImage?path='+eyeOrder.filePath}">
+										<div class="vertical-timeline-bottomTitle disn" th:if="${eyeOrder.operType=='2'}">
+                            				<span th:text="${eyeOrder.nodeCode }" style="float:left;margin-left: 5px;"></span>
+                                			<span style="font-size:13px;float:right;margin-right: 5px;"  th:text="${#calendars.format(eyeOrder.beginTime, 'yyyy-MM-dd hh:mm:ss')}"></span>
+                            			</div>
+                                	</div>
+                                	
+                                </div>
+                        	</div>
+                     		</div>
+            		</div>
+             
+             </div>
+            
+             
+             </div>
+   
+    
+    <th:block th:include="include :: footer" />
+    
+    
+
+</body>
+</html>

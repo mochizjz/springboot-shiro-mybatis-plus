@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('质检轨迹列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                        	<li>
+                                <label>系统/渠道：</label>
+                                <select name="sysCode" th:with="type=${@dict.getType('client_code')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>订单号：</label>
+                                <input type="text" name="orderId"/>
+                            </li>
+                            <li>
+                                <label>保单号：</label>
+                                <input type="text" name="policyNo"/>
+                            </li>
+                            <li>
+                                <label>质检结果</label>
+                                <select name="checkStatus">
+                                    <option value="">所有</option>
+                                    <option value="0">通过</option>
+                                    <option value="1">不通过</option>
+                                </select>
+                            </li>
+                            <li class="select-time">
+                                <label>质检时间：</label>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginCheckTime]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endCheckTime]"/>
+                            </li>
+                             
+                            <li class="select-button">
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+              <!--  <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:eye:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:eye:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:eye:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>-->
+                <!-- <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="eye:checklog:list">
+                    <i class="fa fa-download"></i> 导出查询结果
+                </a> -->
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:checklog:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:checklog:remove')}]];
+        var checkStatusDatas = [[${@dict.getType('check_status')}]];
+        var clientCodeDatas = [[${@dict.getType('client_code')}]];
+        var prefix = ctx + "eye/checklog";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "质检轨迹",
+                columns: [ 
+                {
+                    field: 'id',
+                    title: '编号',
+                    visible: false
+                },
+                {
+                    field: 'sysCode',
+                    title: '系统/渠道',
+                    width:100,
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(clientCodeDatas, value);
+                    }
+                },
+                {
+                    field: 'orderId',
+                    title: '订单号'
+                },
+                {
+                    field: 'policyNo',
+                    title: '保单号'
+                },
+                {
+                	 field: 'checkStatus',
+                     title: '质检状态',
+                     formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(checkStatusDatas, value);
+                     }
+                },
+                
+                {
+                    field: 'checkMessage',
+                    title: '质检结果描述',
+                    formatter: function(value, row, index) {
+                    	value=value.replace(new RegExp("\n", 'g') ,"<br>");
+                        return value;
+                     }
+                },
+                {
+                    field: 'checkTime',
+                    title: '质检时间'
+                },
+                {
+                    field: 'updateUser',
+                    title: '质检操作人'
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

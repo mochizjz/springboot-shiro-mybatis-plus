@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ins.webeye.project.system.cachemanager.mapper.CacheManagerMapper">
+    
+    <resultMap type="CacheManager" id="CacheManagerResult">
+        <result property="id"    column="id"    />
+        <result property="cacheKey"    column="cache_key"    />
+        <result property="cacheKeyDesc"    column="cache_key_desc"    />
+        <result property="createUser"    column="create_user"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateUser"    column="update_user"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectCacheManagerVo">
+        select id, cache_key, cache_key_desc, create_user, create_time, update_user, update_time, remark from sys_cache_manager
+    </sql>
+
+    <select id="selectCacheManagerList" parameterType="CacheManager" resultMap="CacheManagerResult">
+        <include refid="selectCacheManagerVo"/>
+        <where>  
+            <if test="cacheKey != null  and cacheKey != ''"> and cache_key = #{cacheKey}</if>
+            <if test="cacheKeyDesc != null  and cacheKeyDesc != ''"> and cache_key_desc = #{cacheKeyDesc}</if>
+        </where>
+    </select>
+    
+    <select id="selectCacheManagerById" parameterType="Long" resultMap="CacheManagerResult">
+        <include refid="selectCacheManagerVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCacheManager" parameterType="CacheManager" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_cache_manager
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cacheKey != null and cacheKey != ''">cache_key,</if>
+            <if test="cacheKeyDesc != null and cacheKeyDesc != ''">cache_key_desc,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateUser != null">update_user,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cacheKey != null and cacheKey != ''">#{cacheKey},</if>
+            <if test="cacheKeyDesc != null and cacheKeyDesc != ''">#{cacheKeyDesc},</if>
+            <if test="createUser != null">#{createUser},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateUser != null">#{updateUser},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCacheManager" parameterType="CacheManager">
+        update sys_cache_manager
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cacheKey != null and cacheKey != ''">cache_key = #{cacheKey},</if>
+            <if test="cacheKeyDesc != null and cacheKeyDesc != ''">cache_key_desc = #{cacheKeyDesc},</if>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateUser != null">update_user = #{updateUser},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCacheManagerById" parameterType="Long">
+        delete from sys_cache_manager where id = #{id}
+    </delete>
+
+    <delete id="deleteCacheManagerByIds" parameterType="String">
+        delete from sys_cache_manager where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

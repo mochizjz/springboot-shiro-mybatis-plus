@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:include="include :: header('版本预览')" />
+</head>
+
+<body class="gray-bg">
+    <th:block th:include="include :: footer" />
+    <script th:src="@{/js/EyePlayer/EyePlayerSnapshot.min.js}"></script>
+    <script th:inline="javascript">
+    var htmlContent = [[${ htmlContent }]];
+    if (htmlContent == "") {
+        alert("数据出现错误，请联系管理员");
+    } else {
+        var data = JSON.parse(htmlContent);
+        $(document).ready(function () {
+            WebEyeSnapshot.rebuild(data, document);
+        })
+    }
+    </script>
+</body>
+
+</html>

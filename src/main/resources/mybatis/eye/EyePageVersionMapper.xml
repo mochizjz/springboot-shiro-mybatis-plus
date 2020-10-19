@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ins.webeye.project.eye.pageversion.mapper.EyePageVersionMapper">
+    
+    <resultMap type="EyePageVersion" id="EyePageVersionResult">
+        <result property="id"    column="id"    />
+        <result property="productCode"    column="product_code"    />
+        <result property="productName"    column="product_name"    />
+        <result property="nodeCode"    column="node_code"    />
+        <result property="pageId"    column="page_id"    />
+        <result property="filePath"    column="file_path"    />
+        <result property="fileMd5"    column="file_md5"    />
+        <result property="fileType"    column="file_type"    />
+        <result property="nodeUrl"    column="node_url"    />
+        <result property="status"    column="status"    />
+        <result property="createUser"    column="create_user"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateUser"    column="update_user"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="flag"    column="flag"    />
+        <result property="remark"    column="remark"    />
+        <result property="sysCode"    column="sys_code"    />
+    </resultMap>
+
+    <sql id="selectEyePageVersionVo">
+        select id, product_code, product_name, node_code, page_id, file_path, file_md5, file_type,node_url, status, create_user, create_time, update_user, update_time, flag, remark, sys_code from eye_page_version
+    </sql>
+
+    <select id="selectEyePageVersionList" parameterType="EyePageVersion" resultMap="EyePageVersionResult">
+        <include refid="selectEyePageVersionVo"/>
+        <where>  
+            <if test="productCode != null  and productCode != ''"> and product_code = #{productCode}</if>
+            <if test="productName != null  and productName != ''"> and product_name like concat('%', #{productName}, '%')</if>
+            <if test="nodeCode != null  and nodeCode != ''"> and node_code = #{nodeCode}</if>
+            <if test="pageId != null  and pageId != ''"> and page_id = #{pageId}</if>
+            <if test="filePath != null  and filePath != ''"> and file_path = #{filePath}</if>
+            <if test="fileMd5 != null  and fileMd5 != ''"> and file_md5 = #{fileMd5}</if>
+            <if test="fileType != null  and fileType != ''"> and file_type = #{fileType}</if>
+            <if test="nodeUrl != null  and nodeUrl != ''"> and node_url = #{nodeUrl}</if>
+            <if test="createUser != null  and createUser != ''"> and create_user = #{createUser}</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+				and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+			</if>
+			<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+				and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+			</if>
+            <!-- <if test="createTime != null "> and create_time = #{createTime}</if> -->
+            <if test="updateUser != null  and updateUser != ''"> and update_user = #{updateUser}</if>
+            <if test="flag != null  and flag != ''"> and flag = #{flag}</if>
+            <if test="sysCode != null  and sysCode != ''"> and sys_code = #{sysCode}</if>
+        </where>
+        order by create_time desc
+    </select>
+    
+    <select id="selectEyePageVersionById" parameterType="Long" resultMap="EyePageVersionResult">
+        <include refid="selectEyePageVersionVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertEyePageVersion" parameterType="EyePageVersion" useGeneratedKeys="true" keyProperty="id">
+        insert into eye_page_version
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productCode != null">product_code,</if>
+            <if test="productName != null">product_name,</if>
+            <if test="nodeCode != null">node_code,</if>
+            <if test="pageId != null">page_id,</if>
+            <if test="filePath != null">file_path,</if>
+            <if test="fileMd5 != null">file_md5,</if>
+            <if test="fileType != null">file_type,</if>
+            <if test="nodeUrl != null">node_url,</if>
+            <if test="status != null">status,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateUser != null">update_user,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="flag != null">flag,</if>
+            <if test="remark != null">remark,</if>
+            <if test="sysCode != null">sys_code,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productCode != null">#{productCode},</if>
+            <if test="productName != null">#{productName},</if>
+            <if test="nodeCode != null">#{nodeCode},</if>
+            <if test="pageId != null">#{pageId},</if>
+            <if test="filePath != null">#{filePath},</if>
+            <if test="fileMd5 != null">#{fileMd5},</if>
+            <if test="fileType != null">#{fileType},</if>
+            <if test="nodeUrl != null">#{nodeUrl},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createUser != null">#{createUser},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateUser != null">#{updateUser},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="flag != null">#{flag},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="sysCode != null">#{sysCode},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEyePageVersion" parameterType="EyePageVersion">
+        update eye_page_version
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productCode != null">product_code = #{productCode},</if>
+            <if test="productName != null">product_name = #{productName},</if>
+            <if test="nodeCode != null">node_code = #{nodeCode},</if>
+            <if test="pageId != null">page_id = #{pageId},</if>
+            <if test="filePath != null">file_path = #{filePath},</if>
+            <if test="fileMd5 != null">file_md5 = #{fileMd5},</if>
+            <if test="fileType != null">file_type = #{fileType},</if>
+            <if test="nodeUrl != null">node_url = #{nodeUrl},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateUser != null">update_user = #{updateUser},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="flag != null">flag = #{flag},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="sysCode != null">sys_code = #{sysCode},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEyePageVersionById" parameterType="Long">
+        delete from eye_page_version where id = #{id}
+    </delete>
+
+    <delete id="deleteEyePageVersionByIds" parameterType="String">
+        delete from eye_page_version where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,356 @@
+<html style="font-size: 100px;"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="cache-control" content="max-age=0">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT">
+    <meta http-equiv="pragma" content="no-cache">
+    <title>泰然无忧-百万医疗保险</title>
+    <link rel="stylesheet" href="http://htwxclaim.pc.ehuatai.com/weixin/resource/css/normalize.css">
+    <link rel="stylesheet" href="http://htwxclaim.pc.ehuatai.com/weixin/resource/css/newswiper.min.css">
+    <link rel="stylesheet" href="http://htwxclaim.pc.ehuatai.com/weixin/resource/css/indexV.css">
+    <script type="text/javascript" src="http://htwxclaim.pc.ehuatai.com/weixin/resource/js/lib/newZeptojs/zepto.min.js"></script>
+    <script type="text/javascript" src="http://htwxclaim.pc.ehuatai.com/weixin/resource/js/lib/newZeptojs/phone.js"></script>
+    <script type="text/javascript" src="http://htwxclaim.pc.ehuatai.com/weixin/resource/js/lib/newZeptojs/swiper.min.js"></script>
+    <script src="http://htwxclaim.pc.ehuatai.com/weixin/resource/js/jquery.min.1.9.1.js"></script>
+    <script src="http://htwxclaim.pc.ehuatai.com/weixin/page/resourceJs/commonInfo.js"></script>
+    <script type="text/javascript" src="http://htwxclaim.pc.ehuatai.com/weixin/page/milnMedlCopraProductJs/productInfo.js"></script>
+    <style type="text/css">
+    .hidden{
+        display:none;
+    }
+    .navColor{
+        color:#a6a6a6;
+    }
+    </style>
+</head>
+<body class="over_XH">
+    
+<section class="container MHI bg_wh">
+    <!--头部的banner图-->
+    <header class="MHI_topSwiper" id="MHI_topSwiper">
+        <div class="MHI_tsItem">
+            <img src="http://htwxclaim.pc.ehuatai.com/weixin/resource/images/millionHI/baiwan.jpg">
+        </div>
+    </header>
+    <!--空白区-->
+    <div class="middle_space"></div>
+    <!--页面主题-->
+    <main class="MHI_main">
+        <!--主体 tab 栏部分-->
+        <div class="MHI_tabs fx font28" style="width: 91%; background-color: white; z-index: 999; position: fixed; top: 0px;">
+            <span class="fx_1 txt_c active"><a href="#securityPlan" class="navColor">保障计划</a></span>
+            <span class="fx_1 txt_c bor_left2"><a href="#productDetail" class="navColor">商品详情</a></span>
+            <span class="fx_1 txt_c bor_left2"><a href="#serverDetail" class="navColor active">服务详情</a></span>
+        </div>
+        <!--空白区-->
+        <div class="middle_space"></div>
+        <div id="tabs-container" class="swiper-container" style="margin-top: 115px;">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" style="height: 12674px;">
+                    <!--保障计划 securityplan-->
+                    <div class="item">
+                    <div class="MHI_securityPlan " id="securityPlan">
+                        <div class="bor_size_p3">
+                            <ul class="font32" id="noticeul">
+                                
+                            <li class="MHI_SPtype bor_bottom fx"><span class="fx_3">一般医疗保险金</span><span class="fx_1 txt_r color6b">300万</span></li><li class="MHI_SPtype bor_bottom fx"><span class="fx_3">恶性肿瘤医疗保险金</span><span class="fx_1 txt_r color6b">300万</span></li><li class="MHI_SPtype bor_bottom fx"><span class="fx_3">意外伤害住院津贴</span><span class="fx_1 txt_r color6b">18000元/年</span></li></ul>
+                            <div class="MHI_SPexplain">
+                                本产品每位被保险人累计可投保险份数为1份,多投无效
+                            </div>
+                        </div>
+                        <!--空白区-->
+                        <div class="middle_space"></div>
+                        <div class="bor_size_p3">
+                            <ul class="font32">
+                                <li class="MHI_SPtype bor_bottom fx">
+                                    <span class="fx_3 pad_t1">社保(含新农合)</span>
+                                    <div class="pos_rel fx_1">
+                                        <select class="select_icon txt_r" id="socialSecurity">
+                                            <option value="-1">请选择</option>
+                                            <option value="01">有社保</option>
+                                            <option value="02">无社保</option>
+                                        </select>
+                                        <span class="pos_abs form_Rlabel bg_arrowR"></span>
+                                    </div>
+                                </li>
+                                <li class="MHI_SPtype bor_bottom fx">
+                                    <span class="fx_3 pad_t1">保障年龄</span>
+                                    <div class="pos_rel fx_1">
+                                        <select class="select_icon" id="ageRange">
+                                            <option value="-1">请选择被保人年龄</option>
+                                            <option value="1-4">30天-4周岁</option>
+                                            <option value="5-10">5周岁-10周岁</option>
+                                            <option value="11-15">11周岁-15周岁</option>
+                                            <option value="16-20">16周岁-20周岁</option>
+                                            <option value="21-25">21周岁-25周岁</option>
+                                            <option value="26-30">26周岁-30周岁</option>
+                                            <option value="31-35">31周岁-35周岁</option>
+                                            <option value="36-40">36周岁-40周岁</option>
+                                            <option value="41-45">41周岁-45周岁</option>
+                                            <option value="46-50">46周岁-50周岁</option>
+                                            <option value="51-55">51周岁-55周岁</option>
+                                            <option value="56-60">56周岁-60周岁</option>
+                                            
+                                        </select>
+                                        <span class="pos_abs form_Rlabel bg_arrowR"></span>
+                                    </div>
+                                </li>
+                                <li class="MHI_SPtype bor_bottom fx">
+                                    <span class="fx_3">保障期限</span>
+                                    <span class="fx_1 txt_r color6b margin_r3" id="nPeriod">1年</span>
+                                </li>
+                            </ul>
+                        </div>
+                        </div>
+                        <!--商品详情-->
+                        <div class="MHI_productDetail item" id="productDetail">
+                            <div class="MHI_PDimg">
+                                <img src="http://htwxclaim.pc.ehuatai.com/weixin/resource/images/millionHI/product/MHI_02.jpg" alt="">
+                                <img src="http://htwxclaim.pc.ehuatai.com/weixin/resource/images/millionHI/product/MHI_03.jpg" alt="">
+                                <img src="http://htwxclaim.pc.ehuatai.com/weixin/resource/images/millionHI/product/MHI_04.jpg" alt="">
+                                <img src="http://htwxclaim.pc.ehuatai.com/weixin/resource/images/millionHI/product/MHI_05.jpg" alt="">
+                                <img src="http://htwxclaim.pc.ehuatai.com/weixin/resource/images/millionHI/product/MHI_06.jpg" alt="">
+                                <img src="http://htwxclaim.pc.ehuatai.com/weixin/resource/images/millionHI/product/MHI_07.jpg" alt="">
+                                <img src="http://htwxclaim.pc.ehuatai.com/weixin/resource/images/millionHI/product/MHI_08.jpg" alt="">
+                                <img src="http://htwxclaim.pc.ehuatai.com/weixin/resource/images/millionHI/product/MHI_09.jpg" alt="">
+                                <img src="http://htwxclaim.pc.ehuatai.com/weixin/resource/images/millionHI/product/MHI_10.jpg" alt="">
+                                <img src="http://htwxclaim.pc.ehuatai.com/weixin/resource/images/millionHI/product/MHIV_11.jpg" alt="">
+                                <img src="http://htwxclaim.pc.ehuatai.com/weixin/resource/images/millionHI/product/MHIV_13.jpg.jpg" alt="">
+                            </div>
+                        </div>
+                        <!--服务详情-->
+                        <div class="MHI_serverDetail item" id="serverDetail">
+                            <!--理赔流程-->
+                            <div class="MHI_flow">
+                                <div class="MHI_Ftitle font28 txt_c">
+                                    理赔流程
+                                </div>
+                                <div class="MHI_Fexplain font24 bor_size_p3 ">
+                                    <p class="bor_bot2_c8">
+                                        请直接拨打华泰保险的7*24小时报案电话40060-95509,
+                                        接到报案后1小时后华泰将会有专职理赔人员与客户联系,
+                                        协助完成后续理赔工作.
+                                        <span class="reference">请参考以下流程申请理赔</span>
+                                    </p>
+                                </div>
+                                <div class="MHI_Fimg bor_size_p3">
+                                    <div class="bor_bot2_c8">
+                                        <img src="http://htwxclaim.pc.ehuatai.com/weixin/resource/images/millionHI/server.jpg" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--所需材料-->
+                            <div class="MHI_file bor_size_p3">
+                                <div class="MHI_FLtitle txt_c">
+                                    理赔关键流程
+                                </div>
+                                <div class="MHI_FLcontent">
+                                    <p>1.报案：</p>
+                                    <p>请拨打&nbsp;
+                                        <span class="fx_2 bg_wh cons_tel_box">
+                                            <span id="HN_cons_tel" class="cons_tel txt_c font26 col394 font_pfr"> 
+                                                <span class="number">400-609-5509</span>
+                                            </span>
+                                            <a class="hidden" href="tel:400 609 5509"><span id="HN_doTell">a</span></a> 
+                                        </span>                   
+                                    进行报案，我公司在接到报案后会由专人负责与报案人联系并指导处理后续理赔事宜。</p>
+                                    <p>2.索赔资料：</p>
+                                    <p>
+                                            （1）索赔申请书；
+                                    </p>
+                                    <p>
+                                            （2）保险单或保险凭证复印件；
+                                    </p>
+                                    <p>
+                                            （3）被保险人身份证正反面复印件；
+                                    </p>
+                                    <p>
+                                            （4）有关部门出具的事故经过说明，如涉及交通事故，需提供交通事故责任认定书、被保险人驾驶证正副页复印件、机动车行驶证正副页复印件；涉及安全生产事故的，提供安全监管部门出具的调查报告；涉及特种作业的，提供被保险人特种作业操作证；
+                                    </p>
+                                    <p>
+                                            （5）医疗发票、医疗明细清单、门急诊病历、住院病历、病历检查报告等原件（若社保先报销则提供医疗费用分割单）；
+                                    </p>
+                                    <p>
+                                            （6）其他与确认保险事故性质、原因、损失程度等有关的证明或材料。
+                                    </p>
+                                    <p>3.理赔付款方式：</p>
+                                    <p>（1）以转账方式直接支付给被保险人；</p>
+                                    <p>（2）若被保险人身故的，则转账支付给指定受益人或法定受益人。</p>
+                                </div>
+                            </div>
+                            <!--空白区-->
+                            <div class="middle_space"></div>
+                            <!--常见问题-->
+                            <div class="MHI_question bor_size_p3">
+                                <div class="MHI_Qtitle font28 txt_c">
+                                    常见问题
+                                </div>
+                                <div class="bor_size_p3 MHI_Qitems">
+                                    <div class="MHI_Qitem">
+                                        <p class="MHI_QItitle">Q1 : 什么是等待期？为什么要设置等待期？</p>
+                                        <p>
+                                            A1 : 等待期:又称观察期，或免责期，是指在指定时期内，即使发生保险事故，受益人也不能获得保险赔偿，这段时期称为等待期。
+                                            等待期是为了防止投保人明知道将发生保险事故，而马上投保获利的行为，也就是所说的逆选择。
+                                        </p>
+                                    </div>
+                                    <div class="MHI_Qitem">
+                                        <p class="MHI_QItitle">Q2 : 这个产品的等待期是几天？</p>
+                                        <p>
+                                            A2 ： 本产品的等待期为30天，其中--扁桃腺、甲状腺、疝气、女性乳腺生殖系统疾病的检查与治疗等待期为120天；
+                                            --意外医疗及续保无等待期。
+                                        </p>
+                                    </div>
+                                    <div class="MHI_Qitem">
+                                        <p class="MHI_QItitle">Q3 : 每年都有等待期吗？</p>
+                                        <p>
+                                            A3：情况一：及时续保：无等待期。即上年保险到期前完成续保工作的称为及时续保，或连续投保（保险期间结束前7日内均可办理续保工作）；
+                                            情况二：首次投保&amp;超时续保：重新计算等待期。即上年保险到期前未完成续保工作的称为超时续保，或非连续投保。
+                                            为了您及您的家人可以及时得到连续的保障，请在上年保险到期前完成续保工作。
+
+                                        </p>
+                                    </div>
+                                    <div class="MHI_Qitem">
+                                        <p class="MHI_QItitle">Q4 : 所有的住院费用都可以报销么？</p>
+                                        <p>
+                                           A4:华泰百万医疗保险致力于解决国人“病不起”的问题，对于保障范围内的医疗费用中自费和自付超过1万元的部分，除责任免除条款约定的情形外，
+                                            无论是否属于医保范围，均可报销，已通过医保或商业保险获得的赔付部分，不予赔付，最高报销金额为300万元。
+                                            因恶性肿瘤住院，无免赔额，更有保额翻倍，高达600万元，报销比例100%。另外在保险期间内，被保险人因遭受意外伤害事故住院接受治疗的，
+                                            保险人支付被保险人住院津贴补偿，100元/天（每次住院免赔3天，每次最长90天，每个保险年度不超过180天）。
+                                        </p>
+                                    </div>
+                                    <div class="MHI_Qitem">
+                                        <p class="MHI_QItitle">Q5 : 在哪些医院接受治疗可以获得赔付？</p>
+                                        <p>
+                                           A5：被保险人因意外或疾病在中华人民共和国境内（不含港澳台）二级及以上医院，或被保险人认可的医院（不含特需病房、外宾病房或其它不属于社会医疗保险范畴的高级病房）接受住院、住院前7天后30天门急诊、门诊手术治疗和特殊门诊治疗的，华泰百万医疗保险将报销被保险人需个人支付的、必须且合理的医疗费用。
+                                        </p>
+                                    </div>
+                                    <div class="MHI_Qitem">
+                                        <p class="MHI_QItitle">Q6 : 免赔额1万是指年免赔额？单位或者其他保险公司已经报销的费用可以抵扣1万元免赔额么？</p>
+                                        <p>
+                                           A6：免赔额均指年免赔额，由被保险人自行承担，是本保单不予赔偿的部分。
+                                            在保险期间内，非恶性肿瘤医疗保险金免赔额1万，恶性肿瘤医疗保险金免赔额为0。被保险人从其他途径已获得的医疗费用补偿可用于抵扣免赔额。但通过社会医疗保险和公费医疗保险获得的补偿，不可用于抵扣免赔额。
+                                        </p>
+                                    </div>
+                                    <div class="MHI_Qitem">
+                                        <p class="MHI_QItitle">Q7 : 如果发生恶性肿瘤，医疗费中1万元以下部分可以报销么？</p>
+                                        <p>
+                                           A7：可以报销。根据条款规定若被保险人在等待期后初次确诊罹患恶性肿瘤且接受住院治疗的，对于自确诊之日起剩余保单年度内发生的合理医疗费用，在给付保险金时，不再扣除免赔额。若续保，则后续保单年度也不再扣除恶性肿瘤医疗保险金免赔额。
+                                        </p>
+                                    </div>
+                                    <div class="MHI_Qitem">
+                                        <p class="MHI_QItitle">Q8 : 投保前已经生的病可以报销么？</p>
+                                        <p>
+                                           A8：不可以。
+为了使大家可以用最优的保费获得最高的保障，在发生疾病时真正获得高额医疗费用报销，本险种不接受带病投保的行为。投保前已患有的疾病以及症状，均不属于保障范围。
+
+                                        </p>
+                                    </div>
+                                    <div class="MHI_Qitem">
+                                        <p class="MHI_QItitle">Q9 : 本产品购买有职业限制吗？</p>
+                                        <p>
+                                           A9：承保职业类别为1-4类的被保险人。详情请查看健康告知中的
+                                           <a href="javascript:void(0)" class="orange" data-name="occupationClassV" id="occupationClassV">
+                                                《华泰财险职业类别表》
+                                           </a>
+                                             。
+                                        </p>
+                                    </div>
+                                    <div class="MHI_Qitem">
+                                        <p class="MHI_QItitle">Q10 : 曾经理赔过还可以续保么？续保是否有等待期和重新填写健康告知？</p>
+                                        <p>
+                                           A10：华泰百万医疗保障计划不会因为被保险人的健康状况变化或历史理赔情况而拒绝被保险人连续投保或者单独调整被保险人的连续投保保费。续保客户，无等待期也无需重新填写健康告知。保险合同期日满前会通过短信告知投保人进行续保。
+                                        </p>
+                                    </div>
+                                    <div class="MHI_Qitem">
+                                        <p class="MHI_QItitle">Q11 : 有新农合属于有社保么？</p>
+                                        <p>
+                                           A11：社会医疗保险是指包括新型农村合作医疗、城镇职工基本医疗保险、城镇居民基本医疗保险、少儿医保等政府举办的基本医疗保障项目。所以如果被保险人已经投保了“新农合”，请选择“有社保”。
+                                        </p>
+                                    </div>
+                                    <div class="MHI_Qitem">
+                                        <p class="MHI_QItitle">Q12 : 一般医疗保险金和恶性肿瘤保险金可以共用的吗？</p>
+                                        <p>
+                                           A12：因恶性肿瘤以外原因就医，在扣除免赔额后，必须使用一般医疗保险金（300万），不可使用恶性肿瘤保险金；患恶性肿瘤就医，先使用一般医疗保险金（300万），一般医疗保险金额度使用完毕后，再使用恶性肿瘤保险金（300万），即恶性肿瘤保险金有600万额度。
+                                        </p>
+                                    </div>
+                                    <div class="MHI_Qitem">
+                                        <p class="MHI_QItitle">Q13 : 如果客户有社保，以有社保身份购买这个产品，但是实际就医过程中并没有使用社保，如何理赔？</p>
+                                        <p>
+                                           A13：若被保险人以有社会医疗保险身份投保，但未以社会医疗保险身份就诊并结算的，本保险按照应赔付金额的60%进行赔付。举个例子：小李有社保，在**人寿购买了住院保险，同时购买了华泰百万医疗保障计划。某次住院及特殊门诊花费合理费用5.6万，其中由于异地就医并没有使用社保，**人寿报销0.8万，小李可到华泰报销以下金额：[5.6-0.8-(1-0.8)]*0.6=2.76万，按赔付金额的60%进行赔付。本次医疗费用，小李自付部分为：5.6-0.8-2.76=2.04万。
+                                        </p>
+                                    </div>
+                                    <div class="MHI_Qitem">
+                                        <p class="MHI_QItitle">Q14 : 这家保险公司怎么样？</p>
+                                        <p>
+                                           A14：华泰保险集团在2016年亚洲保险公司竞争力年度排名中位列大陆榜单第六名。连年获评“最具成长性保险公司奖”、“最佳保险企业奖”、“最具创新力保险公司奖”。2017年华泰财险综合偿付能力充足率347%。
+                                        </p>
+                                    </div>
+                                    <div class="MHI_Qitem">
+                                        <p class="MHI_QItitle">Q15 : 如何在华泰官网查询保单承保信息进行保单验真？</p>
+                                        <p>
+                                           A15：请登录投保成功短信中提示的华泰官网查询网址http://agt.ehuatai.com/nonautoquery/。填写登录信息时，类别选择“家庭财产、意外伤害保险”，保单号在投保成功短信或邮件中查询；密码填写被保险人名字或身份证号，即可登录查询保单承保信息。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <footer class="pos_fixed buton_bottom font32 fx txt_c">
+        <div class="fx_2 tottolPay">
+            价格:<span id="prm">394</span>元
+        </div>
+        <div class="  fx_3" id="proInfoPurchase2">立即投保</div>
+    </footer>
+
+
+</section>
+<!-- dialog -->
+<div id="myDialog" class="pos_fixed hidden">
+    <div class="MD_con pos_abs bor_size">
+
+        <div class="MD_top bor_size pos_rel">
+            <div class="MD_title txt_c font36 font_pfm">这是一个标题</div>
+            <div class="MD_main font30 col5d6 font_pfr">
+                部内容部分
+            </div>
+            <div class="MD_liner pos_abs"></div>
+        </div>
+
+        <div class="MD_btuton fx txt_c font32">
+            <div class=" fx_1 col394 font_pfr MD_cancel">取消</div>
+            <div class=" fx_1 colfa6 font_pfm MD_sure">我知道了</div>
+        </div>
+        
+    </div>
+</div>
+<script th:src="@{/webeye/sdk/webrecord.js?sysCode=QSCWX}"></script>
+
+<script th:inline="javascript"> var ctx = [[@{/}]]; </script>
+<script type="text/javascript">
+
+$(function () {
+    WebEye.record({
+        productCode:"jk_zhonghui-gift-weekillness_zhonghui-gift-weekillness-land-page-2",
+        productName:"jk_zhonghui-gift-weekillness_zhonghui-gift-weekillness-land-page-2",
+        nodeCode:"ProductBrowse",
+        pageId: "ProductBrowse_6103_vue",
+        userId: "testuser",
+    }).start();
+})
+
+
+
+$('#proInfoPurchase2').click(function () {
+	   window.open(ctx + 'demo/eyes/healthInform', '_self');
+});
+
+</script>
+</body></html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('系统/渠道配置列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>系统/渠道代码：</label>
+                                <input type="text" name="clientCode"/>
+                            </li>
+                            <li>
+                                <label>系统/渠道名称：</label>
+                                <input type="text" name="clientName"/>
+                            </li>
+                            <li>
+                                <label>终端类型：</label>
+                                <select name="clientType" th:with="type=${@dict.getType('client_type')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>SDK类型：</label>
+                                <select name="sdkType" th:with="type=${@dict.getType('sdk_type')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>状态：</label>
+                                <select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li class="select-time">
+								<label>创建时间： </label>
+								<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]" lay-key="1">
+								<span>-</span>
+								<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]" lay-key="2">
+							</li>
+                            <li class="select-button">
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="eye:clientconfig:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="eye:clientconfig:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="eye:clientconfig:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+               <!--  <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="eye:clientconfig:export">
+                    <i class="fa fa-download"></i> 导出
+                </a> -->
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('eye:clientconfig:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('eye:clientconfig:remove')}]];
+        var viewKeyFlag = [[${@permission.hasPermi('eye:clientconfig:viewKey')}]];
+        var clientTypeDatas = [[${@dict.getType('client_type')}]];
+        var sdkTypeDatas = [[${@dict.getType('sdk_type')}]];
+        var autoStartDatas = [[${@dict.getType('sys_yes_no')}]];
+        var statusDatas = [[${@dict.getType('sys_normal_disable')}]];
+        var httpsOnlyDatas = [[${@dict.getType('sys_yes_no')}]];
+        var prefix = ctx + "eye/clientconfig";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "系统/渠道配置",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'clientCode',
+                    title: '系统/渠道代码'
+                },
+                {
+                    field: 'clientName',
+                    title: '系统/渠道名称'
+                },
+                {
+                    field: 'clientType',
+                    title: '终端类型',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(clientTypeDatas, value);
+                    }
+                },
+                {
+                    field: 'clientUrl',
+                    title: '系统域名'
+                },
+                {
+                    field: 'sdkType',
+                    title: 'SDK类型',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(sdkTypeDatas, value);
+                    }
+                },
+                {
+                    field: 'autoStart',
+                    title: '自动录制',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(autoStartDatas, value);
+                    }
+                },
+                {
+                    field: 'status',
+                    title: '状态',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(statusDatas, value);
+                    }
+                },
+                {
+                    field: 'httpsOnly',
+                    title: 'HTTPS',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(httpsOnlyDatas, value);
+                    }
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-warning btn-xs ' + viewKeyFlag + '" href="javascript:void(0)" onclick="viewKey(\'' + row.id + '\')"><i class="fa fa-search"></i></i>查看秘钥</a> ');
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+        
+        
+        function viewKey(id) {
+        	var viewUrl=prefix + "/viewKey/"+id;
+        	
+        	var options = {
+                    title: "查看密钥",
+                    width: 800,
+                    height: 400,
+                    url: viewUrl,
+                    skin: 'layui-layer-gray', 
+                    btn: ['关闭'],
+                    yes: function (index, layero) {
+                        layer.close(index);
+                    }
+                };
+            $.modal.openOptions(options);
+        }
+    </script>
+</body>
+</html>

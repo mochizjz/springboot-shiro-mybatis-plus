@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+ 
+<head>
+    <th:block th:include="include :: header('事件回放')" />
+ 
+    <link rel="stylesheet" type="text/css" th:href="@{/css/viewer.css}"   />
+    <link rel="stylesheet" type="text/css" th:href="@{/js/EyePlayer/EyePlayerStyle.css}" >
+    <link rel="stylesheet" type="text/css" th:href="@{/js/EyePlayer/iconfont.css}">
+    <style>
+        .switch {
+            display: none !important;
+        }
+        .rr-player__frame {
+        	z-index:1000;
+         	-moz-user-select: none;
+			-webkit-user-select: none;
+        }
+    </style>
+    
+</head>
+
+ 
+
+<body class="gray-bg">
+	<div class="row animated fadeInRight" style="height:11vh;margin-left:3vh;font-size:14px;">
+		<div class="info_title">
+		<div class="select-list" th:if="${eyePlayerInfoForRecord!=null}" style="width:93%">
+       			<ul>
+            		<li>
+                		<label>录制凭证：</label>
+                		<input readonly th:value="${eyePlayerInfoForRecord.token}">
+            		</li>
+            		<li>
+                		<label>产品：</label>
+                		<input readonly th:value="${eyePlayerInfoForRecord.productName+'('+eyePlayerInfoForRecord.productCode+')'}">
+            		</li>
+            	</ul>
+            </div>
+			<div class="select-list" th:if="${eyePlayerInfoForRecord==null}" style="width:90%">
+        		<ul>
+            		<li>
+                		<label>录制凭证：</label>
+                		<input readonly th:value="${eyePlayerInfoForOrder.token}">
+            		</li>
+            		<li>
+                		<label>产品：</label>
+                		<input readonly th:value="${eyePlayerInfoForOrder.productName}">
+            		</li>
+            		<li>
+                		<label>质检结果：</label>
+                		<input readonly th:value="${eyePlayerInfoForOrder.checkStatus=='0'?'质检通过':'质检未通过'}">
+            		</li>
+             		<li>
+                		<label>订单：</label>
+               			<input readonly >
+            		</li>
+            		<li>
+                		<label>验证凭证：</label>
+                		<input readonly th:value="${eyePlayerInfoForOrder.verifyCode}">
+            		</li>  
+            		<li>
+                		<label>涉及诉讼：</label>
+                		<input readonly th:value="${eyePlayerInfoForOrder.isLitigations=='0'?'否':'是'}">
+            		</li>   
+        		</ul>
+    		</div>
+			<div style="width:7%" th:if="${eyePlayerInfoForOrder!=null}">
+				<button type="button" class="btn btn-primary"   data-toggle="modal" data-target="#myModal" >
+  					质检
+				</button>
+				<button type="button" class="btn btn-info" >
+  					下载
+				</button>
+			</div>
+			
+ 
+		</div>
+	</div>
+    <div class="row animated fadeInRight">
+        <div class="ibox float-e-margins">
+            <!--  <div class="text-center float-e-margins p-md">
+                
+            </div> -->
+            <div id="ibox-content" style="display:flex;background-color: #eee;height:92vh;">
+
+                <div id="vertical-timeline" class="vertical-container light-timeline" style="overflow: auto;">
+                        <div class="vertical-timeline-block" th:each="eyeOrder:${eyePlayerInfoList}"  style="margin-right:5px">
+                            <div class="vertical-timeline-icon blue-bg" >
+                                <i class="fa fa-tv"></i>
+                            </div>
+                            
+                            <div class="vertical-timeline-content" >
+                            	<div class="vertical-timeline-title">
+                                    <h2 class="nodeCode" th:text="${eyeOrder.nodeCode}" th:title="${eyeOrder.operType}"></h2>
+                            		<a href="#" class="btn btn-sm btn-success replay" th:if="${eyeOrder.showPayBtn}"
+                                    th:playFilePath="${eyeOrder.filePath }" th:playId="${ eyeOrder.id }"
+                                    th:playSetTime="${eyeOrder.playSetTime }"
+                                    ><i class="fa fa-play"></i> 回放</a>                            	
+                            	</div>
+                                <p>
+                                	操作时间:
+                                	<span>
+                            			<small style="font-size:13px" th:text="${#calendars.format(eyeOrder.beginTime, 'yyyy-MM-dd HH:mm:ss')}"></small>
+                            			到
+                            			<small style="font-size:13px" th:text="${#calendars.format(eyeOrder.endTime, 'HH:mm:ss')}"></small>
+                                    	<span th:text="${'('+(eyeOrder.recordTime/60==0?'':eyeOrder.recordTime/60+'分')+eyeOrder.recordTime%60 +'秒 )' }" style="color:#ddd;font-size:10px;display: none"></span>
+                            		</span>
+                                </p>
+                                <p th:text="${'终端类型: '+eyeOrder.clientBrowser }"></p>
+                                <p th:text="${'操作地点: '+eyeOrder.clientCityName +  eyeOrder.clientIp}"></p>
+                            	<div class="imgBox" th:if="not ${#maps.isEmpty(eyeOrder.imgMap)}">
+                      				<img th:each="ImgId,ImgIdStat:${eyeOrder.imgMap}"  th:src="@{'getImage?path='+${ImgIdStat.current.value}}" alt="" class="uploadImg" th:playId="${ ImgIdStat.current.key }"
+										th:data-original="@{'getImage?path='+${ImgIdStat.current.value}}">									
+                  				</div>
+                            </div>
+                     </div>
+                 </div>
+                 <div id="snap" >    </div>
+                 <!-- <div class="gallery">
+                	<div>
+                		<img src="https://icweiliimg6.pstatp.com/weili/l/191572764285075458.webp">
+                		<p class="gallery-message disnone">
+                			<span >节点</span>
+                			<span >时间</span>
+                		</p>
+                	</div>
+                	<div><img src="https://weiliicimg1.pstatp.com/weili/l/250277820395945988.webp"></div>
+                </div> -->
+		</div>
+    </div>
+
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" >
+  	<div class="modal-dialog" role="document">
+ 		<div class="modal-content">
+      		<div class="modal-header">
+        		<button type="button" class="close" data-dismiss="modal" ><span >&times;</span></button>
+        		<h4 class="modal-title">人工质检结果</h4>
+      		</div>
+      		<div class="modal-body">
+        		<form class="form-horizontal">
+					<input id="infoForOrder" name="infoForOrder" type="hidden" th:value="${eyePlayerInfoForOrder}" />
+					<input id="orderId" name="orderId" type="hidden" th:value="${eyePlayerInfoForOrder==null?'':eyePlayerInfoForOrder.orderId}" />
+        			<div class="form-group">
+    					<label class="col-sm-2 control-label">质检结果:</label>
+    					<div class="col-sm-10">
+      						<label class="radio-inline">
+  								<input type="radio" name="result"  value="0" th:checked="${eyePlayerInfoForOrder==null?'':eyePlayerInfoForOrder.checkStatus=='0'?true:false}"> 通过
+							</label>
+							<label class="radio-inline">
+  								<input type="radio" name="result"  value="1" th:checked="${eyePlayerInfoForOrder==null?'':eyePlayerInfoForOrder.checkStatus=='1'?true:false}"> 不通过
+							</label>
+    					</div>
+  					</div>
+  					<div class="form-group">
+    					<label  class="col-sm-2 control-label">质检说明:</label>
+    					<div class="col-sm-10">
+							<textarea class="form-control" rows="5" style="resize:none" th:utext=="${eyePlayerInfoForOrder==null?'':eyePlayerInfoForOrder.checkMessage}" id="checkMessage"></textarea>
+						</div>
+  					</div>
+        		</form>
+      		</div>
+      		<div class="modal-footer">
+        		<button type="button" class="btn btn-success" data-dismiss="modal" onclick="submitCheck()">确定</button>
+        		<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      		</div>
+    	</div>
+  	</div>
+</div>
+            
+   
+    <th:block th:include="include :: footer" />
+    <script th:src="@{/js/EyePlayer/EyePlayerIndex.js}"></script>
+    <script th:src="@{/js/viewer.js}"></script>
+    <script th:inline="javascript">
+    
+     function loadJs(id, url, callback) {
+    	    var script = document.createElement('script');
+    	    script.type = 'text/javascript';
+    	    script.src = url;
+    	    script.id = id;
+    	    script.onload = script.onreadystatechange = function () {
+    	        if (script.readyState && script.readyState != 'loaded' && script.readyState != 'complete') return;
+    	        script.onreadystatechange = script.onload = null
+    	        if (callback) callback();
+    	    }
+    	    document.body.appendChild(script);
+    }
+     
+     var id="eyePlayer",url;
+     var webEyePlayer;
+    
+   
+    
+    if([[${eyePlayerInfoList[0].sdkType == 'F' }]]) {
+    	url= ctx + 'js/EyePlayer/EyePlayerIndex_iframe.js'
+    } else {
+    	url = ctx + 'js/EyePlayer/EyePlayerIndex.js'
+    }
+    loadJs(id,url,function(){
+    	var token = [[${ eyePlayerInfoList[0].token }]];
+        var nodeCodeDatas = [[${@dict.getType('eye_node_config')}]];
+        
+        var playType=[[${playType}]];//从后台得到的播放类型，playType=orderPage 时，不用自动跳转播放
+        var playId=[[${playId}]];//后台指定当前播放哪个节点
+        
+        $(document).ready(function () {
+            if(document.getElementById('vertical-timeline')){
+                var galley = document.getElementById('vertical-timeline');
+                var viewer = new Viewer(galley, {
+                    url: 'data-original',
+                  });
+                }
+            
+            
+            $('.nodeCode').each(function(){
+                var code = $.table.selectDictLabel(nodeCodeDatas, $(this).text())
+                var icon = $(this).parent().parent().siblings('.blue-bg').find('i');
+                 switch ($(this).text()) {
+                	case "ProductBrowse":
+                		icon.attr('class','fa fa-th-large');
+                		break;
+                	case "InsurePrompt": 
+                    	icon.attr('class','fa fa-info-circle');
+                		break;
+                	case "HealthInform":
+                		icon.attr('class','fa fa-leaf');
+                		break;
+                	case "InsureInput": 
+                    	icon.attr('class','fa fa-pencil-square-o');
+                		break;
+                	case "ClauseBrowse":
+                		icon.attr('class','fa fa-list-ul');
+                		break;
+                  	case "OrderSubmit": 
+                    	icon.attr('class','fa fa-paper-plane');
+                		break;
+                  	case "OrderPayWay": 
+                    	icon.attr('class','icon iconfont icon-pay');
+                		break;
+                  	case "OrderPaySuccess": 
+                    	icon.attr('class','fa fa-calendar-check-o');
+                		break;
+                  	case "FaceCheck": 
+                    	icon.attr('class','fa fa-id-card');
+                		break;
+                }
+                 $(this).html(code)
+                
+            })
+            $('.replay').click(function (event) {            	
+            	$(this).removeClass('btn-success').addClass('btn-primary');
+            	$(this).html('<i class="fa fa-play"></i> 正在回放')
+            	
+            	$(this).parent().parent().parent().siblings().find('.replay').removeClass('btn-primary').addClass('btn-success');
+            	$(this).parent().parent().parent().siblings().find('.replay').html('<i class="fa fa-play"></i> 回放')
+
+            	var width = $('#snap').width() * 0.98;
+                var height = $('#snap').height() * 0.85;
+                
+                var block = $(this).parent().parent();
+                var top = parseFloat(block.offset().top) - parseFloat($('#vertical-timeline').offset().top) +  parseFloat($('#vertical-timeline').scrollTop());
+                $('#vertical-timeline').animate({
+                	scrollTop: top,
+                },1500)
+                
+                /*  webEye.capture({});
+                webEye.replayer({type:"ckxz",ordernum:"2345",dom:"#snap"});
+                
+             
+               event.preventDefault(); */
+               
+               
+                var playFilePath = $(this).attr('playfilepath');//注意 th转换后这里只能是小写
+                var playSetTime = $(this).attr('playsettime');
+              
+                //2020-9-3 liuping 增加判断
+                if(playFilePath==""&&(typeof(playSetTime) == "undefined" ||playSetTime==null)){
+                	  $.modal.alertError("该节点没有需要播放的内容！");
+                      return;
+                }
+              
+                if((typeof(playFilePath) == "undefined" ||playFilePath==null)&&playSetTime>0){
+                	//这个是进行播放,是进行时间跳转
+                	webEyePlayer.playerTime(playSetTime);
+                	return;
+                }
+                $('#snap').html("");
+                if(webEyePlayer) {
+                	webEyePlayer.destroyPlay();
+                }
+                
+                var type = "";
+                var events = [];
+                var that = $(this);
+                
+                $.ajax({
+                    url: ctx + "eye/recordPlay/getFile?path=" + playFilePath, type: "get", async: false,
+                    success: function (res) {
+                        /* console.log(res)
+                        events= JSON.parse(res); */
+                        var data = res.substr(0, res.length - 1)
+                        events = '[' + data + ']';
+                        events = JSON.parse(events);
+                        console.log(events);
+                        if(events.length<=1) {
+                            $.modal.alertError("没有找到需要播放的数据！");
+                            return;
+                        }
+                        webEyePlayer = new WebEyePlayer({
+                            target: document.getElementById('snap'), // customizable root element
+                            data: {
+                                events,
+                                autoPlay: true,
+                                width: width,
+                                height:height
+                            },
+                         });
+                        if(playType!="orderPage"){
+                        	webEyePlayer.addEventListener('finish',function(){
+                                setTimeout(function(){
+                                	var next = $('.vertical-container').find('.btn-primary').parent().parent().parent().nextAll().find('.replay')//拿到全部下一节点
+                                	if(next[0]){
+                                        next[0].click();//取最前面的一个节点
+                                	} 
+                                },1500) 
+                            });
+                        }
+                        
+                        setTimeout(function(){
+                            $('.rr-player__frame').css('pointer-events', 'none');
+                          },1000)
+                    }
+                });
+            })
+            
+            
+            //触发一个自动播放
+           	$('.replay,.uploadImg').each(function(){
+           		if($(this).attr('playId')==playId){
+           			$(this).click();
+           		}
+           	})
+        });
+       
+    });
+
+    function submitCheck(){
+    	var infoForOrder = $("#infoForOrder").val();
+    	if(infoForOrder==undefined || infoForOrder==null || infoForOrder==''){
+    		alert("未完成订单不能质检");
+    		return;
+    	}
+
+		var result = $('input[name="result"]:checked').val();
+		var checkMessage = $("#checkMessage").val();
+		var orderId = $("#orderId").val();
+    	if(result==undefined){
+    		alert("请输入质检结果或质检说明");
+    		return;
+    	}
+		var data = {
+			"orderId":orderId,
+			"checkStatus": result,
+			"checkMessage": checkMessage
+		}
+
+		$.ajax({
+			url: ctx + 'eye/order/updateQuality',
+			type: 'post',
+			data: JSON.stringify(data),
+			contentType: "application/json",
+			dataType: 'json',
+			success: function (data) {
+				alert('操作成功')
+				
+				if(result == '0'){
+					$('.orderStatus').html("质检结果：质检通过")
+				} else {
+					$('.orderStatus').html("质检结果：质检未通过")
+				}
+			},
+			error: function(err){
+				alert('系统错误，请重试')
+			}
+		})
+
+    }
+
+    </script>
+</body>
+</html>
