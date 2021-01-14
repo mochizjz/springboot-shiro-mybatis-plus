@@ -3,14 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ins.webeye</groupId>
-    <artifactId>WebEye</artifactId>
-    <version>1.2.1</version>
-    <packaging>war</packaging>
+    <groupId>job.demo</groupId>
+    <artifactId>twang</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
 
-    <name>WebEye</name>
-    <url>http://www.webeye.vip</url>
-    <description>Web录制系统</description>
+    <name>twang</name>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
