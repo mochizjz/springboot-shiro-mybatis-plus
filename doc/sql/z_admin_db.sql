@@ -46,7 +46,7 @@ CREATE TABLE `gen_table`  (
 -- ----------------------------
 -- Records of gen_table
 -- ----------------------------
-INSERT INTO `gen_table` VALUES (15, 'eye_client_config', '对接的系统或渠道配置', NULL, NULL, 'EyeClientConfig', 'crud', 'ins.webeye.project.eye', 'eye', 'clientconfig', '系统/渠道配置', 'webeye', '{\"treeName\":\"\",\"treeParentCode\":\"\",\"treeCode\":\"\"}', 'admin', '2020-08-30 01:02:49', '', '2020-08-30 10:09:37', '');
+INSERT INTO `gen_table` VALUES (15, 'eye_client_config', '对接的系统或渠道配置', NULL, NULL, 'EyeClientConfig', 'crud', 'ins.webeye.project.system', 'eye', 'clientconfig', '系统/渠道配置', 'webeye', '{\"treeName\":\"\",\"treeParentCode\":\"\",\"treeCode\":\"\"}', 'admin', '2020-08-30 01:02:49', '', '2020-08-30 10:09:37', '');
 
 -- ----------------------------
 -- Table structure for gen_table_column
