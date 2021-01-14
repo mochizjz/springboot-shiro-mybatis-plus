@@ -23,6 +23,7 @@ import ${packageName}.${businessName}.mapper.${ClassName}Mapper;
 import ${packageName}.${businessName}.domain.${ClassName};
 import ${packageName}.${businessName}.service.I${ClassName}Service;
 import ins.webeye.common.utils.text.Convert;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 /**
  * ${functionName}Service业务层处理
@@ -31,7 +32,7 @@ import ins.webeye.common.utils.text.Convert;
  * @date ${datetime}
  */
 @Service
-public class ${ClassName}ServiceImpl implements I${ClassName}Service 
+public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper,${ClassName}> implements I${ClassName}Service
 {
     @Autowired
     private ${ClassName}Mapper ${className}Mapper;
